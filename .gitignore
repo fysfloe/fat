@@ -1,4 +1,10 @@
 /bootstrap/compiled.php
+/vendor
+/.idea
+composer.phar
+composer.lock  # Remove this one after you create a project
 .env.*.php
 .env.php
 .env
+.DS_Store
+Thumbs.db
