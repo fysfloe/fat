@@ -8,3 +8,5 @@ composer.lock  # Remove this one after you create a project
 .env
 .DS_Store
 Thumbs.db
+/nbproject/
+/app/storage/
