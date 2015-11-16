@@ -12,7 +12,10 @@
 */
 
 Route::resource('user', 'UserController');
+Route::resource('game', 'GameController');
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('user/{id}/follow/', 'UserController@follow');
