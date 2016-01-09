@@ -1,18 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Fat\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use App\User;
-use App\Media;
-use App\Location;
-use App\FatProfile;
-use App\SoccerPlayerProfile;
+use Fat\Models\User\User;
+use Fat\Models\Media;
+use Fat\Models\Location;
+use Fat\Models\User\Profile\FatProfile;
+use Fat\Models\User\Profile\Player\SoccerPlayerProfile;
 
-class UserController extends Controller
+class UserController extends AbstractController
 {
     /**
      * Display a listing of the resource.
@@ -23,9 +21,9 @@ class UserController extends Controller
     {
         $users = User::all();
 
-        foreach($users as $user)
+		foreach($users as $user)
         {
-            var_dump($user->profiles['fat']);
+			var_dump($user->profiles['fat']);
         }
     }
 

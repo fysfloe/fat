@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace Fat\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use Fat\Http\Controllers\AbstractController;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
-class PasswordController extends Controller
+class PasswordController extends AbstractController
 {
     /*
     |--------------------------------------------------------------------------

@@ -1,17 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Fat\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use App\Game;
-use App\Location;
-use App\User;
-use App\Media;
+use Fat\Models\Game\Game;
+use Fat\Models\Location;
+use Fat\Models\User\User;
+use Fat\Models\Media;
 
-class GameController extends Controller
+class GameController extends AbstractController
 {
     /**
      * Display a listing of the resource.

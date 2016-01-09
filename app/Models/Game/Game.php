@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Fat\Models\Game;
 
 use Jenssegers\Mongodb\Model as Eloquent;
 
@@ -34,21 +34,21 @@ class Game extends Eloquent {
 
     public function participants()
     {
-        return $this->embedsMany('App\Participant');
-    }
+        return $this->embedsMany('Fat\\Models\\Game\\Participant');
+	}
 
     public function organizer()
     {
-        return $this->hasOne('App\User');
-    }
+        return $this->hasOne('Fat\\Models\\User\\User');
+	}
 
     public function media()
     {
-        return $this->embedsMany('App\Media');
-    }
+        return $this->embedsMany('Fat\\Models\\Media');
+	}
 
     public function location()
     {
-        return $this->embedsOne('App\Location');
-    }
+        return $this->embedsOne('Fat\\Models\\Location');
+	}
 }

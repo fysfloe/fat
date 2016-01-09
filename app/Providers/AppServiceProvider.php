@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace Fat\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Fat\Models;
 
 use Jenssegers\Mongodb\Model as Eloquent;
 

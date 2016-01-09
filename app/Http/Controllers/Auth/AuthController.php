@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace Fat\Http\Controllers\Auth;
 
-use App\User;
+use fysfloe\fat\Models\User\User;
 use Validator;
-use App\Http\Controllers\Controller;
+use Fat\Http\Controllers\AbstractController;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
-class AuthController extends Controller
+class AuthController extends AbstractController
 {
     /*
     |--------------------------------------------------------------------------

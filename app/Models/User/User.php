@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Fat\Models\User;
 
 use Jenssegers\Mongodb\Model as Eloquent;
 
@@ -18,13 +18,13 @@ class User extends Eloquent {
 
     public function games()
     {
-        return $this->hasMany('App\Game');
-    }
+        return $this->hasMany('Fat\\Models\\Game\\Game');
+	}
 
     public function location()
     {
-        return $this->embedsOne('App\Location');
-    }
+        return $this->embedsOne('Fat\\Models\\Location');
+	}
 
     /**
      * @param $type string fb | fat
@@ -32,8 +32,8 @@ class User extends Eloquent {
      */
     public function profile($type)
     {
-        return $this->embedsOne('App\FacebookProfile', 'profiles.'.$type);
-    }
+        return $this->embedsOne('Fat\\Models\\User\\Profile\\FacebookProfile', 'profiles.' . $type);
+	}
 
     /**
      * @param $sport string soccer | beachvolleyball | ...
@@ -41,16 +41,16 @@ class User extends Eloquent {
      */
     public function playerProfile($sport)
     {
-        return $this->embedsOne('App\PlayerProfile', 'profiles.player.'.$sport);
-    }
+        return $this->embedsOne('Fat\\Models\\User\\Profile\\Player\\AbstractPlayerProfile', 'profiles.player.' . $sport);
+	}
 
     public function follows()
     {
-        return $this->belongsToMany('App\User', null, 'followers', 'follows');
-    }
+        return $this->belongsToMany('Fat\\Models\\User\\User', null, 'followers', 'follows');
+	}
 
     public function followedBy()
     {
-        return $this->belongsToMany('App\User', null, 'follows', 'followers');
-    }
+        return $this->belongsToMany('Fat\\Models\\User\\User', null, 'follows', 'followers');
+	}
 }

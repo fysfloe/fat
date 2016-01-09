@@ -138,13 +138,13 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Illuminate\Html\HtmlServiceProvider::class,
 
-        /*
+		/*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        Fat\Providers\AppServiceProvider::class,
+        Fat\Providers\AuthServiceProvider::class,
+        Fat\Providers\EventServiceProvider::class,
+        Fat\Providers\RouteServiceProvider::class,
         Jenssegers\Mongodb\MongodbServiceProvider::class,
 
     ],
@@ -197,7 +197,6 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
         'Form'      => Illuminate\Html\FormFacade::class,
         'HTML'      => Illuminate\Html\HtmlFacade::class,
-
-    ],
+	],
 
 ];
