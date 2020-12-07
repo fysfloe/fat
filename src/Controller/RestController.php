@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\AbstractEntity;
 use App\Service\Traits\CaseConverter;
+use DateTime;
 use Doctrine\Persistence\ObjectRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 abstract class RestController extends AbstractController
 {
@@ -15,7 +17,7 @@ abstract class RestController extends AbstractController
 
     abstract protected function getEntityClass(): string;
 
-    protected function response($data, array $meta = [], array $errors = []): JsonResponse
+    protected function response($data, array $meta = [], $errors = []): JsonResponse
     {
         return $this->json([
             'data' => $this->serialize($data),
@@ -24,7 +26,7 @@ abstract class RestController extends AbstractController
         ]);
     }
 
-    protected function serialize($data): array
+    protected function serialize($data): ?array
     {
         if ($data instanceof AbstractEntity) {
             return $data->toArray();
@@ -39,7 +41,7 @@ abstract class RestController extends AbstractController
         return $data;
     }
 
-    protected function errorResponse(array $errors): JsonResponse
+    protected function errorResponse(string $errors): JsonResponse
     {
         return $this->response(null, [], $errors);
     }
@@ -51,7 +53,7 @@ abstract class RestController extends AbstractController
 
     protected function fetchAll(): array
     {
-        return $this->getRepository()->findAll();
+        return $this->getRepository()->findBy(['deletedAt' => null]);
     }
 
     protected function decodeRequestData(Request $request): array
@@ -66,13 +68,16 @@ abstract class RestController extends AbstractController
         $entity = new $entityClass;
         $requestData = $this->decodeRequestData($request);
 
-        foreach ($entity->getWriteableFields() as $fieldName) {
-            $entitySetter = 'set' . ucfirst($this->toCamelCase($fieldName));
+        $this->fillEntityFields($entity, $requestData);
 
-            if (method_exists($entity, $entitySetter) && isset($requestData[$fieldName])) {
-                $entity->$entitySetter($requestData[$fieldName]);
-            }
-        }
+        return $entity;
+    }
+
+    protected function updateEntity(AbstractEntity $entity, Request $request): AbstractEntity
+    {
+        $requestData = $this->decodeRequestData($request);
+
+        $this->fillEntityFields($entity, $requestData);
 
         return $entity;
     }
@@ -83,5 +88,49 @@ abstract class RestController extends AbstractController
         $this->getDoctrine()->getManager()->flush();
 
         return $entity;
+    }
+
+    protected function delete(int $id): AbstractEntity
+    {
+        $entity = $this->getEntity(['id' => $id]);
+        $entity->setDeletedAt(new DateTime());
+
+        $this->save($entity);
+
+        return $entity;
+    }
+
+    protected function getEntity(array $findBy): AbstractEntity
+    {
+        /** @var AbstractEntity $entity */
+        $entity = $this->getRepository()->findOneBy(
+            array_unique(
+                array_merge(
+                    $findBy,
+                    ['deletedAt' => null]
+                )
+            )
+        );
+
+        if (null === $entity) {
+            throw new NotFoundHttpException('Object with the given criteria could not be found.');
+        }
+
+        return $entity;
+    }
+
+    /**
+     * @param AbstractEntity $entity
+     * @param array $requestData
+     */
+    protected function fillEntityFields(AbstractEntity $entity, array $requestData): void
+    {
+        foreach ($entity->getWriteableFields() as $fieldName) {
+            $entitySetter = 'set' . ucfirst($this->toCamelCase($fieldName));
+
+            if (method_exists($entity, $entitySetter) && isset($requestData[$fieldName])) {
+                $entity->$entitySetter($requestData[$fieldName]);
+            }
+        }
     }
 }
