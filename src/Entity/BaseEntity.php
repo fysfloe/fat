@@ -42,13 +42,6 @@ trait BaseEntity
     private User $createdBy;
 
     /**
-     * @var DateTime
-     *
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private DateTime $deletedAt;
-
-    /**
      * @return int
      */
     public function getId(): int
@@ -117,24 +110,6 @@ trait BaseEntity
     public function setCreatedBy(User $createdBy): BaseEntity
     {
         $this->createdBy = $createdBy;
-        return $this;
-    }
-
-    /**
-     * @return DateTime|null
-     */
-    public function getDeletedAt(): ?DateTime
-    {
-        return $this->deletedAt;
-    }
-
-    /**
-     * @param DateTime|null $deletedAt
-     * @return BaseEntity
-     */
-    public function setDeletedAt(?DateTime $deletedAt): BaseEntity
-    {
-        $this->deletedAt = $deletedAt;
         return $this;
     }
 }

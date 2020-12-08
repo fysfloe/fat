@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Game extends AbstractEntity
 {
     use BaseEntity;
+    use SoftDelete;
 
     /**
      * @var string

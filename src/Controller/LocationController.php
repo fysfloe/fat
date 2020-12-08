@@ -2,7 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Game;
+use App\Entity\Location;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,9 +11,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
- * @Route("/game")
+ * @Route("/location")
  */
-class GameController extends RestController
+class LocationController extends RestController
 {
     /**
      * @Route("", methods={"GET"})
@@ -35,17 +36,21 @@ class GameController extends RestController
      */
     public function createAction(Request $request, ValidatorInterface $validator): JsonResponse
     {
-        $game = $this->createEntity($request);
+        $location = $this->createEntity($request);
 
-        $errors = $validator->validate($game);
+        $errors = $validator->validate($location);
 
         if (count($errors) > 0) {
             return $this->errorResponse((string)$errors);
         }
 
-        $this->save($game);
+        try {
+            $this->save($location);
+        } catch (UniqueConstraintViolationException $e) {
+            return $this->errorResponse('Place id already exists in the database.');
+        }
 
-        return $this->response($game, [], [], Response::HTTP_CREATED);
+        return $this->response($location, [], [], Response::HTTP_CREATED);
     }
 
     /**
@@ -69,19 +74,23 @@ class GameController extends RestController
      */
     public function updateAction(int $id, Request $request, ValidatorInterface $validator): JsonResponse
     {
-        $game = $this->getEntity(['id' => $id]);
+        $location = $this->getEntity(['id' => $id]);
 
-        $game = $this->updateEntity($game, $request);
+        $location = $this->updateEntity($location, $request);
 
-        $errors = $validator->validate($game);
+        $errors = $validator->validate($location);
 
         if (count($errors) > 0) {
             return $this->errorResponse((string)$errors);
         }
 
-        $this->save($game);
+        try {
+            $this->save($location);
+        } catch (UniqueConstraintViolationException $e) {
+            return $this->errorResponse('Place id already exists in the database.');
+        }
 
-        return $this->response($game);
+        return $this->response($location);
     }
 
     /**
@@ -97,6 +106,6 @@ class GameController extends RestController
 
     protected function getEntityClass(): string
     {
-        return Game::class;
+        return Location::class;
     }
 }

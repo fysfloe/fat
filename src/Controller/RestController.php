@@ -6,8 +6,6 @@ use App\Entity\AbstractEntity;
 use App\Service\Traits\CaseConverter;
 use DateTime;
 use Doctrine\Persistence\ObjectRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -16,35 +14,6 @@ abstract class RestController extends AbstractController
     use CaseConverter;
 
     abstract protected function getEntityClass(): string;
-
-    protected function response($data, array $meta = [], $errors = []): JsonResponse
-    {
-        return $this->json([
-            'data' => $this->serialize($data),
-            'meta' => $meta,
-            'errors' => $errors
-        ]);
-    }
-
-    protected function serialize($data): ?array
-    {
-        if ($data instanceof AbstractEntity) {
-            return $data->toArray();
-        }
-
-        if (is_array($data)) {
-            return array_map(function (AbstractEntity $entity) {
-                return $entity->toArray();
-            }, $data);
-        }
-
-        return $data;
-    }
-
-    protected function errorResponse(string $errors): JsonResponse
-    {
-        return $this->response(null, [], $errors);
-    }
 
     protected function getRepository(): ObjectRepository
     {
@@ -69,6 +38,10 @@ abstract class RestController extends AbstractController
         $requestData = $this->decodeRequestData($request);
 
         $this->fillEntityFields($entity, $requestData);
+
+        if (null !== $this->getUser()) {
+            $entity->setCreatedBy($this->getUser());
+        }
 
         return $entity;
     }
@@ -128,8 +101,8 @@ abstract class RestController extends AbstractController
         foreach ($entity->getWriteableFields() as $fieldName) {
             $entitySetter = 'set' . ucfirst($this->toCamelCase($fieldName));
 
-            if (method_exists($entity, $entitySetter) && isset($requestData[$fieldName])) {
-                $entity->$entitySetter($requestData[$fieldName]);
+            if (method_exists($entity, $entitySetter) && isset($requestData[$this->toSnakeCase($fieldName)])) {
+                $entity->$entitySetter($requestData[$this->toSnakeCase($fieldName)]);
             }
         }
     }

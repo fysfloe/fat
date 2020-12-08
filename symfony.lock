@@ -254,6 +254,9 @@
     "symfony/http-kernel": {
         "version": "v5.2.0"
     },
+    "symfony/intl": {
+        "version": "v5.2.0"
+    },
     "symfony/maker-bundle": {
         "version": "1.0",
         "recipe": {
@@ -267,6 +270,9 @@
         "version": "v2.0.0"
     },
     "symfony/polyfill-intl-grapheme": {
+        "version": "v1.20.0"
+    },
+    "symfony/polyfill-intl-icu": {
         "version": "v1.20.0"
     },
     "symfony/polyfill-intl-normalizer": {
