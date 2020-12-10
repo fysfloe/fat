@@ -3,10 +3,21 @@
 namespace App\Controller;
 
 use App\Entity\AbstractEntity;
+use App\Exception\MissingRepositoryException;
+use App\Exception\ValidationException;
+use App\Exception\WrongRepositoryException;
+use App\Repository\BaseRepository;
+use App\Service\Rest\CreateService;
+use App\Service\Rest\DeleteService;
+use App\Service\Rest\UpdateService;
 use App\Service\Traits\CaseConverter;
 use DateTime;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ObjectRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 abstract class RestController extends AbstractController
@@ -15,11 +26,91 @@ abstract class RestController extends AbstractController
 
     abstract protected function getEntityClass(): string;
 
-    protected function getRepository(): ObjectRepository
+    /**
+     * @return BaseRepository
+     * @throws WrongRepositoryException
+     */
+    protected function getRepository(): BaseRepository
     {
-        return $this->getDoctrine()->getManager()->getRepository($this->getEntityClass());
+        $repository = $this->getDoctrine()->getManager()->getRepository($this->getEntityClass());
+
+        if (!$repository instanceof BaseRepository) {
+            throw new WrongRepositoryException();
+        }
+
+        return $repository;
     }
 
+    /**
+     * @param Request $request
+     * @param CreateService $createService
+     * @return JsonResponse
+     * @throws MissingRepositoryException
+     * @throws ORMException
+     * @throws OptimisticLockException
+     * @throws WrongRepositoryException
+     */
+    protected function defaultCreateAction(Request $request, CreateService $createService): JsonResponse
+    {
+        $createService->setRepository($this->getRepository());
+
+        try {
+            return $this->response(
+                $createService->handle($this->getEntityClass(), $this->decodeRequestData($request)),
+                [],
+                [],
+                Response::HTTP_CREATED
+            );
+        } catch (ValidationException $e) {
+            return $this->errorResponse((string)$e->getErrors());
+        }
+    }
+
+    /**
+     * @param int $id
+     * @param Request $request
+     * @param UpdateService $updateService
+     * @return JsonResponse
+     * @throws MissingRepositoryException
+     * @throws ORMException
+     * @throws OptimisticLockException
+     * @throws WrongRepositoryException
+     */
+    protected function defaultUpdateAction(int $id, Request $request, UpdateService $updateService): JsonResponse
+    {
+        $updateService->setRepository($this->getRepository());
+
+        try {
+            return $this->response(
+                $updateService->handle(['id' => $id], $this->decodeRequestData($request))
+            );
+        } catch (ValidationException $e) {
+            return $this->errorResponse((string)$e->getErrors());
+        }
+    }
+
+    /**
+     * @param int $id
+     * @param DeleteService $deleteService
+     * @return JsonResponse
+     * @throws MissingRepositoryException
+     * @throws ORMException
+     * @throws OptimisticLockException
+     * @throws WrongRepositoryException
+     */
+    protected function defaultDeleteAction(int $id, DeleteService $deleteService): JsonResponse
+    {
+        $deleteService->setRepository($this->getRepository());
+
+        return $this->response(
+            $deleteService->handle(['id' => $id])
+        );
+    }
+
+    /**
+     * @return array
+     * @throws WrongRepositoryException
+     */
     protected function fetchAll(): array
     {
         return $this->getRepository()->findBy(['deletedAt' => null]);
@@ -28,49 +119,6 @@ abstract class RestController extends AbstractController
     protected function decodeRequestData(Request $request): array
     {
         return json_decode($request->getContent(), true);
-    }
-
-    protected function createEntity(Request $request): AbstractEntity
-    {
-        $entityClass = $this->getEntityClass();
-        /** @var AbstractEntity $entity */
-        $entity = new $entityClass;
-        $requestData = $this->decodeRequestData($request);
-
-        $this->fillEntityFields($entity, $requestData);
-
-        if (null !== $this->getUser()) {
-            $entity->setCreatedBy($this->getUser());
-        }
-
-        return $entity;
-    }
-
-    protected function updateEntity(AbstractEntity $entity, Request $request): AbstractEntity
-    {
-        $requestData = $this->decodeRequestData($request);
-
-        $this->fillEntityFields($entity, $requestData);
-
-        return $entity;
-    }
-
-    protected function save(AbstractEntity $entity): AbstractEntity
-    {
-        $this->getDoctrine()->getManager()->persist($entity);
-        $this->getDoctrine()->getManager()->flush();
-
-        return $entity;
-    }
-
-    protected function delete(int $id): AbstractEntity
-    {
-        $entity = $this->getEntity(['id' => $id]);
-        $entity->setDeletedAt(new DateTime());
-
-        $this->save($entity);
-
-        return $entity;
     }
 
     protected function getEntity(array $findBy): AbstractEntity
@@ -92,18 +140,5 @@ abstract class RestController extends AbstractController
         return $entity;
     }
 
-    /**
-     * @param AbstractEntity $entity
-     * @param array $requestData
-     */
-    protected function fillEntityFields(AbstractEntity $entity, array $requestData): void
-    {
-        foreach ($entity->getWriteableFields() as $fieldName) {
-            $entitySetter = 'set' . ucfirst($this->toCamelCase($fieldName));
 
-            if (method_exists($entity, $entitySetter) && isset($requestData[$this->toSnakeCase($fieldName)])) {
-                $entity->$entitySetter($requestData[$this->toSnakeCase($fieldName)]);
-            }
-        }
-    }
 }

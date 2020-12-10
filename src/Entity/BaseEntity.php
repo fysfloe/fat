@@ -51,9 +51,9 @@ trait BaseEntity
 
     /**
      * @param int $id
-     * @return BaseEntity
+     * @return AbstractEntity
      */
-    public function setId(int $id): BaseEntity
+    public function setId(int $id): AbstractEntity
     {
         $this->id = $id;
         return $this;
@@ -69,9 +69,9 @@ trait BaseEntity
 
     /**
      * @param DateTime $createdAt
-     * @return BaseEntity
+     * @return AbstractEntity
      */
-    public function setCreatedAt(DateTime $createdAt): BaseEntity
+    public function setCreatedAt(DateTime $createdAt): AbstractEntity
     {
         $this->createdAt = $createdAt;
         return $this;
@@ -87,9 +87,9 @@ trait BaseEntity
 
     /**
      * @param DateTime $updatedAt
-     * @return BaseEntity
+     * @return AbstractEntity
      */
-    public function setUpdatedAt(DateTime $updatedAt): BaseEntity
+    public function setUpdatedAt(DateTime $updatedAt): AbstractEntity
     {
         $this->updatedAt = $updatedAt;
         return $this;
@@ -105,9 +105,9 @@ trait BaseEntity
 
     /**
      * @param User $createdBy
-     * @return BaseEntity
+     * @return AbstractEntity
      */
-    public function setCreatedBy(User $createdBy): BaseEntity
+    public function setCreatedBy(User $createdBy): AbstractEntity
     {
         $this->createdBy = $createdBy;
         return $this;

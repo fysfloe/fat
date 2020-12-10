@@ -2,25 +2,22 @@
 
 namespace App\Controller;
 
-use App\Entity\Location;
+use App\Entity\FootballGame;
 use App\Exception\MissingRepositoryException;
 use App\Exception\WrongRepositoryException;
 use App\Service\Rest\CreateService;
 use App\Service\Rest\DeleteService;
 use App\Service\Rest\UpdateService;
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
- * @Route("/location")
+ * @Route("/football_game")
  */
-class LocationController extends RestController
+class FootballGameController extends RestController
 {
     /**
      * @Route("", methods={"GET"})
@@ -41,10 +38,10 @@ class LocationController extends RestController
      * @param Request $request
      * @param CreateService $createService
      * @return JsonResponse
-     * @throws WrongRepositoryException
      * @throws MissingRepositoryException
      * @throws ORMException
      * @throws OptimisticLockException
+     * @throws WrongRepositoryException
      */
     public function createAction(Request $request, CreateService $createService): JsonResponse
     {
@@ -69,10 +66,10 @@ class LocationController extends RestController
      * @param Request $request
      * @param UpdateService $updateService
      * @return JsonResponse
-     * @throws WrongRepositoryException
      * @throws MissingRepositoryException
      * @throws ORMException
      * @throws OptimisticLockException
+     * @throws WrongRepositoryException
      */
     public function updateAction(int $id, Request $request, UpdateService $updateService): JsonResponse
     {
@@ -97,6 +94,6 @@ class LocationController extends RestController
 
     protected function getEntityClass(): string
     {
-        return Location::class;
+        return FootballGame::class;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Location;
+use App\Entity\Venue;
 use App\Exception\MissingRepositoryException;
 use App\Exception\WrongRepositoryException;
 use App\Service\Rest\CreateService;
@@ -18,9 +19,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
- * @Route("/location")
+ * @Route("/venue")
  */
-class LocationController extends RestController
+class VenueController extends RestController
 {
     /**
      * @Route("", methods={"GET"})
@@ -97,6 +98,6 @@ class LocationController extends RestController
 
     protected function getEntityClass(): string
     {
-        return Location::class;
+        return Venue::class;
     }
 }

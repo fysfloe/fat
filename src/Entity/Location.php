@@ -68,7 +68,7 @@ class Location extends AbstractEntity
 
     public function getReadableFields(): array
     {
-        return ['street', 'zipCode', 'city', 'country', 'placeId'];
+        return ['id', 'street', 'zipCode', 'city', 'country', 'placeId'];
     }
 
     /**

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Service\Traits\CaseConverter;
+use ReflectionException;
+use ReflectionProperty;
 
 abstract class AbstractEntity
 {
@@ -11,6 +13,9 @@ abstract class AbstractEntity
     abstract public function getWriteableFields(): array;
     abstract public function getReadableFields(): array;
 
+    /**
+     * @return array
+     */
     public function toArray(): array
     {
         $arr = [];
@@ -19,7 +24,13 @@ abstract class AbstractEntity
             $getter = 'get' . ucfirst($fieldName);
 
             if (method_exists($this, $getter)) {
-                $arr[$this->toSnakeCase($fieldName)] = $this->$getter();
+                $value = $this->$getter();
+
+                if (is_object($value) && method_exists($value, 'toArray')) {
+                    $value = $value->toArray();
+                }
+
+                $arr[$this->toSnakeCase($fieldName)] = $value;
             }
         }
 

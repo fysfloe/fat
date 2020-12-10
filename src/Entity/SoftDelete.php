@@ -23,9 +23,9 @@ trait SoftDelete
 
     /**
      * @param DateTime|null $deletedAt
-     * @return SoftDelete
+     * @return AbstractEntity
      */
-    public function setDeletedAt(?DateTime $deletedAt): SoftDelete
+    public function setDeletedAt(?DateTime $deletedAt): AbstractEntity
     {
         $this->deletedAt = $deletedAt;
         return $this;

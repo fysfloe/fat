@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\FootballGameRepository")
  */
 class FootballGame extends Game
 {
@@ -14,10 +14,9 @@ class FootballGame extends Game
     use SoftDelete;
 
     /**
-     * @var int
+     * @var int|null
      *
-     * @ORM\Column(type="integer")
-     * @Assert\NotBlank()
+     * @ORM\Column(type="integer", nullable=true)
      */
     private int $playersPerSide;
 
@@ -35,5 +34,23 @@ class FootballGame extends Game
             parent::getReadableFields(),
             ['playersPerSide']
         );
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPlayersPerSide(): ?int
+    {
+        return $this->playersPerSide;
+    }
+
+    /**
+     * @param int|null $playersPerSide
+     * @return FootballGame
+     */
+    public function setPlayersPerSide(?int $playersPerSide): FootballGame
+    {
+        $this->playersPerSide = $playersPerSide;
+        return $this;
     }
 }

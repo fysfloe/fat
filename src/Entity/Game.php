@@ -24,9 +24,8 @@ abstract class Game extends AbstractEntity
      *
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank()
-     * @Assert\DateTime()
      */
-    protected string $date;
+    protected DateTime $date;
 
     /**
      * @var string
@@ -44,12 +43,12 @@ abstract class Game extends AbstractEntity
     protected User $organizer;
 
     /**
-     * @var Venue
+     * @var Venue|null
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Venue")
      * @ORM\JoinColumn(name="venue_id", referencedColumnName="id", onDelete="RESTRICT")
      */
-    protected Venue $venue;
+    protected ?Venue $venue = null;
 
     /**
      * @var bool
@@ -76,13 +75,103 @@ abstract class Game extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return DateTime
+     */
+    public function getDate(): DateTime
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param DateTime $date
+     * @return Game
+     */
+    public function setDate(DateTime $date): Game
+    {
+        $this->date = $date;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     * @return Game
+     */
+    public function setDescription(string $description): Game
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @return User
+     */
+    public function getOrganizer(): User
+    {
+        return $this->organizer;
+    }
+
+    /**
+     * @param User $organizer
+     * @return Game
+     */
+    public function setOrganizer(User $organizer): Game
+    {
+        $this->organizer = $organizer;
+        return $this;
+    }
+
+    /**
+     * @return Venue
+     */
+    public function getVenue(): ?Venue
+    {
+        return $this->venue;
+    }
+
+    /**
+     * @param Venue $venue
+     * @return Game
+     */
+    public function setVenue(?Venue $venue): Game
+    {
+        $this->venue = $venue;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPrivate(): bool
+    {
+        return $this->private;
+    }
+
+    /**
+     * @param bool $private
+     * @return Game
+     */
+    public function setPrivate(bool $private): Game
+    {
+        $this->private = $private;
+        return $this;
+    }
+
     public function getWriteableFields(): array
     {
-        return ['name'];
+        return ['date', 'name', 'venue', 'private'];
     }
 
     public function getReadableFields(): array
     {
-        return ['id', 'name'];
+        return ['id', 'name', 'date', 'venue', 'private'];
     }
 }
