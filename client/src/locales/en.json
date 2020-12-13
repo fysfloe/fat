@@ -1,0 +1,32 @@
+{
+  "common": {
+    "submit": "Submit"
+  },
+  "game": {
+    "create": {
+      "heading": "Create new game"
+    },
+    "form": {
+      "step": {
+        "nextButton": "Next"
+      },
+      "details": {
+        "heading": "Game details",
+        "name": "Name",
+        "date": "Date",
+        "time": "Time",
+        "private": "Private"
+      },
+      "venue": {
+        "heading": "Choose venue",
+        "chooseExistingVenue": "Choose existing venue",
+        "name": "Venue",
+        "orEnterLocation": "Or enter location",
+        "street": "Street",
+        "zipCode": "ZIP code",
+        "city": "City",
+        "country": "Country"
+      }
+    }
+  }
+}

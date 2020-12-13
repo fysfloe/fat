@@ -88,7 +88,7 @@ abstract class RestService
                     if (array_key_exists('id', $value)) {
                         $value = $this->findEntity($entityRepository, $value['id'], $reflectionClass);
                     } else {
-                        $newEntity = new ($reflectionClass->getName());
+                        $newEntity = new $fieldType;
                         $value = $this->fillEntityFields($newEntity, $value);
                         $this->em->persist($value);
                     }
@@ -155,7 +155,7 @@ abstract class RestService
      * @param $entityRepository
      * @param int $value
      * @param ReflectionClass|null $reflectionClass
-     * @return int
+     * @return AbstractEntity
      */
     protected function findEntity($entityRepository, int $value, ?ReflectionClass $reflectionClass): AbstractEntity
     {
