@@ -3,31 +3,19 @@
     <page-title>{{ $t('game.create.heading') }}</page-title>
 
     <form @submit.prevent="submit">
-      <div class="game-form-steps">
-        <game-form-step :number="1" :heading="$t('game.form.details.heading')">
-          <game-details-form :game="game"/>
-        </game-form-step>
-
-        <game-form-step :number="2" :heading="$t('game.form.venue.heading')">
-          <game-venue-form :game="game"/>
-        </game-form-step>
-      </div>
-
-      <button type="submit" class="button is-primary">{{ $t('common.submit') }}</button>
+      <game-form-steps :game="game"></game-form-steps>
     </form>
   </div>
 </template>
 
 <script>
-  import moment from "moment";
-  import PageTitle from "../basic/PageTitle";
-  import GameDetailsForm from './form/GameDetailsForm';
-  import GameFormStep from './form/GameFormStep';
-  import GameVenueForm from './form/GameVenueForm';
+  import moment from 'moment';
+  import PageTitle from '../basic/PageTitle';
+  import GameFormSteps from './form/GameFormSteps';
 
   export default {
     name: 'create-game',
-    components: {GameVenueForm, GameFormStep, GameDetailsForm, PageTitle},
+    components: {GameFormSteps, PageTitle},
     data () {
       return {
         game: null,

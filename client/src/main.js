@@ -4,6 +4,8 @@ import router from './router'
 import store from './store'
 import i18n from './i18n'
 import VueI18n from 'vue-i18n'
+import VueScrollTo from 'vue-scrollto'
+import VueObserveVisibility from 'vue-observe-visibility'
 
 Vue.config.productionTip = false
 
@@ -16,5 +18,7 @@ new Vue({
 
 Vue.use(VueI18n)
 Vue.use(require('vue-moment'));
+Vue.use(VueScrollTo)
+Vue.use(VueObserveVisibility)
 
 require('@/assets/scss/main.scss')
