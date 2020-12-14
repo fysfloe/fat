@@ -22,7 +22,7 @@ class Venue extends AbstractEntity
     /**
      * @var Location
      *
-     * @ORM\OneToOne(targetEntity="App\Entity\Location", inversedBy="venue")
+     * @ORM\OneToOne(targetEntity="App\Entity\Location", inversedBy="venue", cascade={"persist"})
      * @ORM\JoinColumn(name="location_id", referencedColumnName="id", onDelete="RESTRICT")
      */
     private Location $location;

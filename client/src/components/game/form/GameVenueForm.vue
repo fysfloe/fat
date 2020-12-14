@@ -3,14 +3,10 @@
     <div class="column">
       <separator>{{ $t('game.form.venue.chooseExistingVenue') }}</separator>
 
-      <div>
-        <input-group
-                :label="$t('game.form.venue.name')"
-                name="venue.name"
-                v-model="game.venue.name"
-                required
-        />
-      </div>
+      <venue-select
+        :venues="venues"
+        :game="game"
+      />
 
       <separator>{{ $t('game.form.venue.orEnterLocation') }}</separator>
 
@@ -20,6 +16,7 @@
                 name="venue.street"
                 v-model="game.location.street"
                 required
+                :disabled="!!game.venue"
         />
 
         <input-group
@@ -27,6 +24,7 @@
                 name="venue.zip_code"
                 v-model="game.location.zip_code"
                 required
+                :disabled="!!game.venue"
         />
 
         <input-group
@@ -34,6 +32,7 @@
                 name="venue.city"
                 v-model="game.location.city"
                 required
+                :disabled="!!game.venue"
         />
 
         <input-group
@@ -41,6 +40,7 @@
                 name="venue.country"
                 v-model="game.location.country"
                 required
+                :disabled="!!game.venue"
         />
       </div>
     </div>
@@ -51,10 +51,12 @@
   import InputGroup from "../../basic/InputGroup";
   import moment from "moment";
   import Separator from '../../basic/Separator';
+  import {mapState} from 'vuex';
+  import VenueSelect from './VenueSelect';
 
   export default {
     name: 'game-venue-form',
-    components: {Separator, InputGroup},
+    components: {VenueSelect, Separator, InputGroup},
     props: {
       game: {
         type: Object,
@@ -66,6 +68,14 @@
         time: null,
         date: null
       }
+    },
+    computed: {
+      ...mapState({
+        venues: state => state.venue.items
+      })
+    },
+    mounted () {
+      this.$store.dispatch('venue/fetch')
     },
     watch: {
       date () {

@@ -3,7 +3,7 @@
     <template v-if="type === 'checkbox'">
       <div class="control">
         <label class="checkbox">
-          <input type="checkbox" :name="name" v-model="val" :autofocus="autofocus" ref="input">
+          <input type="checkbox" :name="name" v-model="val" :autofocus="autofocus" ref="input" :disabled="disabled">
           {{ label }}
         </label>
       </div>
@@ -11,7 +11,7 @@
     <template v-else-if="type === 'currency'">
       <label class="label" :for="name">{{ label }} <span v-if="required">*</span></label>
       <div :class="{'control': true, 'has-icons-left': icon !== null}">
-        <currency-input class="input" :name="name" :id="name" :min="min" :max="max" v-model="val" :placeholder="label" :currency="null" :autofocus="autofocus" ref="input" />
+        <currency-input class="input" :name="name" :id="name" :min="min" :max="max" v-model="val" :placeholder="label" :currency="null" :autofocus="autofocus" ref="input" :disabled="disabled" />
         <span v-if="icon" class="icon is-small is-left">
           <i :class="icon"></i>
         </span>
@@ -20,7 +20,7 @@
     <template v-else>
       <label class="label" :for="name">{{ label }} <span v-if="required">*</span></label>
       <div :class="{'control': true, 'has-icons-left': icon !== null}">
-        <input class="input" :type="type" :name="name" :id="name" :min="min" :max="max" v-model="val" :placeholder="label" :autofocus="autofocus" ref="input">
+        <input @focus="$emit('focus')" @focusout="$emit('focusout')" class="input" :type="type" :name="name" :id="name" :min="min" :max="max" v-model="val" :placeholder="label" :autofocus="autofocus" ref="input" :disabled="disabled">
         <span v-if="icon" class="icon is-small is-left">
           <i :class="icon"></i>
         </span>
@@ -65,6 +65,10 @@ export default {
       default: null
     },
     autofocus: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
       type: Boolean,
       default: false
     }

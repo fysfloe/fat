@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from '../config/axios'
 import game from '../modules/game/store'
+import venue from '../modules/venue/store'
 
 Vue.use(Vuex)
 
@@ -13,6 +14,10 @@ export default new Vuex.Store({
       type: null,
       show: false,
       text: ''
+    },
+    countries: {
+      // TODO
+      'at': 'Austria'
     }
   },
   actions: {
@@ -77,6 +82,7 @@ export default new Vuex.Store({
     }
   },
   modules: {
-    game
+    game,
+    venue
   }
 })

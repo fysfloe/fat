@@ -49,7 +49,7 @@
           name: null,
           date: null,
           time: null,
-          venue: {},
+          venue: null,
           location: {},
           players_per_side: null,
           private: false

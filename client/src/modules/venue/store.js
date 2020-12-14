@@ -1,6 +1,6 @@
 import axios from '../../config/axios'
 
-const name = 'football_game'
+const name = 'venue'
 
 export default {
   namespaced: true,
