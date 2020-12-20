@@ -35,10 +35,11 @@
                 :disabled="!!game.venue"
         />
 
-        <input-group
+        <select-field
                 :label="$t('game.form.venue.country')"
                 name="venue.country"
                 v-model="game.location.country"
+                :options="countries"
                 required
                 :disabled="!!game.venue"
         />
@@ -49,44 +50,42 @@
 
 <script>
   import InputGroup from "../../basic/InputGroup";
-  import moment from "moment";
   import Separator from '../../basic/Separator';
   import {mapState} from 'vuex';
   import VenueSelect from './VenueSelect';
+  import SelectField from '../../basic/SelectField';
 
   export default {
     name: 'game-venue-form',
-    components: {VenueSelect, Separator, InputGroup},
+    components: {SelectField, VenueSelect, Separator, InputGroup},
     props: {
       game: {
         type: Object,
         required: true
       }
     },
-    data () {
-      return {
-        time: null,
-        date: null
-      }
-    },
     computed: {
       ...mapState({
-        venues: state => state.venue.items
+        venues: state => state.venue.items,
+        countries: state => {
+          const countryArray = []
+
+          for (const countryCode in state.countries) {
+            if (Object.prototype.hasOwnProperty.call(state.countries, countryCode)) {
+              countryArray.push({
+                value: countryCode,
+                name: state.countries[countryCode]
+              })
+            }
+          }
+
+          return countryArray
+        }
       })
     },
     mounted () {
       this.$store.dispatch('venue/fetch')
-    },
-    watch: {
-      date () {
-        this.dateTimeString = moment((this.date ? this.date + ' ' : '') + (this.time ?? '')).format()
-      },
-      time () {
-        this.dateTimeString = moment((this.date ? this.date + ' ' : '') + (this.time ?? '')).format()
-      },
-      dateTimeString () {
-        this.game.date = this.dateTimeString
-      }
+      this.$store.dispatch('getCountries')
     },
   }
 </script>

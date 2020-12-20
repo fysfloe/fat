@@ -27,6 +27,26 @@
         "zipCode": "ZIP code",
         "city": "City",
         "country": "Country"
+      },
+      "venueDetails": {
+        "heading": "Venue details",
+        "ground": "Ground",
+        "groundOptions": {
+          "grass": "Grass",
+          "artificialGrass": "Artificial grass",
+          "concrete": "Concrete",
+          "sand": "Sand",
+          "indoor": "Indoor",
+          "other": "Other"
+        },
+        "venueAdditions": "Venue additions",
+        "hasShowers": "Showers",
+        "hasDrinkingWater": "Drinking water",
+        "hasEquipmentRent": "Equipment for rent",
+        "hasLockers": "Lockers",
+        "hasCafeteria": "Cafeteria",
+        "hasSauna": "Sauna",
+        "description": "Description"
       }
     }
   }

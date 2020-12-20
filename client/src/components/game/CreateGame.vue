@@ -50,6 +50,9 @@
           date: null,
           time: null,
           venue: null,
+          venue_details: {
+            ground: 'grass'
+          },
           location: {},
           players_per_side: null,
           private: false

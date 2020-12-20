@@ -3,9 +3,30 @@
     <template v-if="type === 'checkbox'">
       <div class="control">
         <label class="checkbox">
-          <input type="checkbox" :name="name" v-model="val" :autofocus="autofocus" ref="input" :disabled="disabled">
+          <input type="checkbox" @change="$emit('change')" :name="name" v-model="val" :autofocus="autofocus" ref="input" :disabled="disabled">
           {{ label }}
         </label>
+      </div>
+    </template>
+    <template v-else-if="type === 'textarea'">
+      <label class="label" :for="name">{{ label }} <span v-if="required">*</span></label>
+      <div :class="{'control': true, 'has-icons-left': icon !== null}">
+        <textarea
+            @focus="$emit('focus')"
+            @focusout="$emit('focusout')"
+            class="textarea"
+            :name="name"
+            :id="name"
+            v-model="val"
+            :placeholder="label"
+            :autofocus="autofocus"
+            ref="input"
+            :disabled="disabled"
+            :autocomplete="autocomplete"
+        />
+        <span v-if="icon" class="icon is-small is-left">
+          <i :class="icon"></i>
+        </span>
       </div>
     </template>
     <template v-else-if="type === 'currency'">
@@ -20,7 +41,22 @@
     <template v-else>
       <label class="label" :for="name">{{ label }} <span v-if="required">*</span></label>
       <div :class="{'control': true, 'has-icons-left': icon !== null}">
-        <input @focus="$emit('focus')" @focusout="$emit('focusout')" class="input" :type="type" :name="name" :id="name" :min="min" :max="max" v-model="val" :placeholder="label" :autofocus="autofocus" ref="input" :disabled="disabled">
+        <input
+                @focus="$emit('focus')"
+                @focusout="$emit('focusout')"
+                class="input"
+                :type="type"
+                :name="name"
+                :id="name"
+                :min="min"
+                :max="max"
+                v-model="val"
+                :placeholder="label"
+                :autofocus="autofocus"
+                ref="input"
+                :disabled="disabled"
+                :autocomplete="autocomplete"
+        >
         <span v-if="icon" class="icon is-small is-left">
           <i :class="icon"></i>
         </span>
@@ -71,6 +107,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    autocomplete: {
+      type: String,
+      default: null
     }
   },
   computed: {

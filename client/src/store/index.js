@@ -48,6 +48,12 @@ export default new Vuex.Store({
     },
     changePassword (credentials) {
       return axios.post('users/change-password', credentials)
+    },
+    getCountries ({ commit }) {
+      return axios.get('country')
+          .then(response => {
+            commit('setCountries', response.data.data)
+          })
     }
   },
   mutations: {
@@ -66,6 +72,9 @@ export default new Vuex.Store({
         show: false,
         text: ''
       }
+    },
+    setCountries (state, countries) {
+      state.countries = countries
     }
   },
   getters: {

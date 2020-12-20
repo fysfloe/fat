@@ -65,10 +65,10 @@
 
   .game-form-step {
     position: relative;
-    opacity: 0.5;
+    //opacity: 0.5;
 
     &.is-current-step, &.is-in-viewport {
-      opacity: 1;
+      //opacity: 1;
     }
 
     .game-form-step-number {
