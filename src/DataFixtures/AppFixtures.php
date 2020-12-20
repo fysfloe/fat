@@ -25,7 +25,7 @@ class AppFixtures extends Fixture
                     ->setStreet('Bahnhofstraße 1D')
                     ->setZipCode('1140')
                     ->setCity('Vienna')
-                    ->setCountry('at')
+                    ->setCountry('AT')
                     ->setPlaceId('abc')
             ));
 
@@ -36,7 +36,7 @@ class AppFixtures extends Fixture
                     ->setStreet('Gerhard-Hanappi-Platz 1')
                     ->setZipCode('1140')
                     ->setCity('Vienna')
-                    ->setCountry('at')
+                    ->setCountry('AT')
                     ->setPlaceId('def')
             ));
 
@@ -47,7 +47,7 @@ class AppFixtures extends Fixture
                     ->setStreet('Linienamtsgasse 7')
                     ->setZipCode('1130')
                     ->setCity('Vienna')
-                    ->setCountry('at')
+                    ->setCountry('AT')
                     ->setPlaceId('ghi')
             ));
     }

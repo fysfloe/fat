@@ -25,7 +25,15 @@ abstract class Game extends AbstractEntity
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank()
      */
-    protected DateTime $date;
+    protected DateTime $startDate;
+
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(type="datetime")
+     * @Assert\NotBlank()
+     */
+    protected DateTime $endDate;
 
     /**
      * @var string
@@ -51,11 +59,27 @@ abstract class Game extends AbstractEntity
     protected ?Venue $venue = null;
 
     /**
+     * @var Location|null
+     *
+     * @ORM\OneToOne(targetEntity="App\Entity\Location")
+     * @ORM\JoinColumn(name="location_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected ?Location $location = null;
+
+    /**
      * @var bool
      *
      * @ORM\Column(type="boolean", options={"default"=false}, nullable=false)
      */
     protected bool $private = false;
+
+    /**
+     * @var VenueDetails
+     *
+     * @ORM\OneToOne(targetEntity="VenueDetails")
+     * @ORM\JoinColumn(name="venue_details_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected VenueDetails $venueDetails;
 
     /**
      * @return string
@@ -78,18 +102,36 @@ abstract class Game extends AbstractEntity
     /**
      * @return DateTime
      */
-    public function getDate(): DateTime
+    public function getStartDate(): DateTime
     {
-        return $this->date;
+        return $this->startDate;
     }
 
     /**
-     * @param DateTime $date
+     * @param DateTime $startDate
      * @return Game
      */
-    public function setDate(DateTime $date): Game
+    public function setStartDate(DateTime $startDate): Game
     {
-        $this->date = $date;
+        $this->startDate = $startDate;
+        return $this;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getEndDate(): DateTime
+    {
+        return $this->endDate;
+    }
+
+    /**
+     * @param DateTime $endDate
+     * @return Game
+     */
+    public function setEndDate(DateTime $endDate): Game
+    {
+        $this->endDate = $endDate;
         return $this;
     }
 
@@ -130,7 +172,7 @@ abstract class Game extends AbstractEntity
     }
 
     /**
-     * @return Venue
+     * @return Venue|null
      */
     public function getVenue(): ?Venue
     {
@@ -138,12 +180,30 @@ abstract class Game extends AbstractEntity
     }
 
     /**
-     * @param Venue $venue
+     * @param Venue|null $venue
      * @return Game
      */
     public function setVenue(?Venue $venue): Game
     {
         $this->venue = $venue;
+        return $this;
+    }
+
+    /**
+     * @return Location|null
+     */
+    public function getLocation(): ?Location
+    {
+        return $this->location;
+    }
+
+    /**
+     * @param Location|null $location
+     * @return Game
+     */
+    public function setLocation(?Location $location): Game
+    {
+        $this->location = $location;
         return $this;
     }
 
@@ -165,13 +225,31 @@ abstract class Game extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return VenueDetails
+     */
+    public function getVenueDetails(): VenueDetails
+    {
+        return $this->venueDetails;
+    }
+
+    /**
+     * @param VenueDetails $venueDetails
+     * @return Game
+     */
+    public function setVenueDetails(VenueDetails $venueDetails): Game
+    {
+        $this->venueDetails = $venueDetails;
+        return $this;
+    }
+
     public function getWriteableFields(): array
     {
-        return ['date', 'name', 'venue', 'private'];
+        return ['startDate', 'endDate', 'name', 'venue', 'location', 'private', 'venueDetails'];
     }
 
     public function getReadableFields(): array
     {
-        return ['id', 'name', 'date', 'venue', 'private'];
+        return ['id', 'name', 'startDate', 'endDate', 'venue', 'location', 'private', 'venueDetails'];
     }
 }

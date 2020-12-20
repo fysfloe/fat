@@ -18,7 +18,7 @@ class FootballGame extends Game
      *
      * @ORM\Column(type="integer", nullable=true)
      */
-    private int $playersPerSide;
+    private ?int $playersPerSide = null;
 
     public function getWriteableFields(): array
     {

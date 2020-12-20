@@ -47,14 +47,6 @@ class Location extends AbstractEntity
     private string $country;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", unique=true)
-     * @Assert\NotBlank()
-     */
-    private string $placeId;
-
-    /**
      * @var Venue
      *
      * @ORM\OneToOne(targetEntity="App\Entity\Venue", mappedBy="location")
@@ -63,12 +55,12 @@ class Location extends AbstractEntity
 
     public function getWriteableFields(): array
     {
-        return ['street', 'zipCode', 'city', 'country', 'placeId'];
+        return ['street', 'zipCode', 'city', 'country'];
     }
 
     public function getReadableFields(): array
     {
-        return ['id', 'street', 'zipCode', 'city', 'country', 'placeId'];
+        return ['id', 'street', 'zipCode', 'city', 'country'];
     }
 
     /**
@@ -140,24 +132,6 @@ class Location extends AbstractEntity
     public function setCountry(string $country): Location
     {
         $this->country = $country;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPlaceId(): string
-    {
-        return $this->placeId;
-    }
-
-    /**
-     * @param string $placeId
-     * @return Location
-     */
-    public function setPlaceId(string $placeId): Location
-    {
-        $this->placeId = $placeId;
         return $this;
     }
 }

@@ -7,21 +7,42 @@
             required
     />
 
-    <input-group
-            :label="$t('game.form.details.date')"
-            name="date"
-            v-model="date"
+    <div class="columns">
+      <div class="column">
+        <input-group
+            :label="$t('game.form.details.startDate')"
+            name="startDate"
+            v-model="startDate"
             required
             type="date"
-    />
+        />
 
-    <input-group
-            :label="$t('game.form.details.time')"
-            name="time"
-            v-model="time"
+        <input-group
+            :label="$t('game.form.details.startTime')"
+            name="startTime"
+            v-model="startTime"
             required
             type="time"
-    />
+        />
+      </div>
+      <div class="column">
+        <input-group
+            :label="$t('game.form.details.endDate')"
+            name="endDate"
+            v-model="endDate"
+            required
+            type="date"
+        />
+
+        <input-group
+            :label="$t('game.form.details.endTime')"
+            name="endTime"
+            v-model="endTime"
+            required
+            type="time"
+        />
+      </div>
+    </div>
 
     <input-group
             :label="$t('game.form.details.private')"
@@ -47,19 +68,32 @@
     },
     data () {
       return {
-        time: null,
-        date: null
+        startDate: null,
+        startTime: null,
+        endDate: null,
+        endTime: null,
+        startDateTimeString: null,
+        endDateTimeString: null
       }
     },
     watch: {
-      date () {
-        this.dateTimeString = moment((this.date ? this.date + ' ' : '') + (this.time ?? '')).format()
+      startDate () {
+        this.startDateTimeString = moment((this.startDate ? this.startDate + ' ' : '') + (this.startTime ?? '')).format()
       },
-      time () {
-        this.dateTimeString = moment((this.date ? this.date + ' ' : '') + (this.time ?? '')).format()
+      startTime () {
+        this.startDateTimeString = moment((this.startDate ? this.startDate + ' ' : '') + (this.startTime ?? '')).format()
       },
-      dateTimeString () {
-        this.game.date = this.dateTimeString
+      startDateTimeString () {
+        this.game.start_date = this.startDateTimeString
+      },
+      endDate () {
+        this.endDateTimeString = moment((this.endDate ? this.endDate + ' ' : '') + (this.endTime ?? '')).format()
+      },
+      endTime () {
+        this.endDateTimeString = moment((this.endDate ? this.endDate + ' ' : '') + (this.endTime ?? '')).format()
+      },
+      endDateTimeString () {
+        this.game.end_date = this.endDateTimeString
       }
     },
   }

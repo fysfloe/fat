@@ -9,7 +9,6 @@
 </template>
 
 <script>
-  import moment from 'moment';
   import PageTitle from '../basic/PageTitle';
   import GameFormSteps from './form/GameFormSteps';
 
@@ -18,25 +17,11 @@
     components: {GameFormSteps, PageTitle},
     data () {
       return {
-        game: null,
-        date: null,
-        time: null,
-        dateTimeString: null
+        game: null
       }
     },
     created () {
       this.clearGame()
-    },
-    watch: {
-      date () {
-        this.dateTimeString = moment((this.date ? this.date + ' ' : '') + (this.time ?? '')).format()
-      },
-      time () {
-        this.dateTimeString = moment((this.date ? this.date + ' ' : '') + (this.time ?? '')).format()
-      },
-      dateTimeString () {
-        this.game.date = this.dateTimeString
-      }
     },
     methods: {
       submit () {
@@ -47,7 +32,8 @@
         this.time = null
         this.game = {
           name: null,
-          date: null,
+          start_date: null,
+          end_date: null,
           time: null,
           venue: null,
           venue_details: {
