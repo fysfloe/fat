@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\FootballGame;
 use App\Exception\MissingRepositoryException;
 use App\Exception\WrongRepositoryException;
+use App\Service\FootballGame\CreateFootballGameService;
 use App\Service\Rest\CreateService;
 use App\Service\Rest\DeleteService;
 use App\Service\Rest\UpdateService;
@@ -36,14 +37,14 @@ class FootballGameController extends RestController
      * @Route("", methods={"POST"})
      *
      * @param Request $request
-     * @param CreateService $createService
+     * @param CreateFootballGameService $createService
      * @return JsonResponse
      * @throws MissingRepositoryException
      * @throws ORMException
      * @throws OptimisticLockException
      * @throws WrongRepositoryException
      */
-    public function createAction(Request $request, CreateService $createService): JsonResponse
+    public function createAction(Request $request, CreateFootballGameService $createService): JsonResponse
     {
         return $this->defaultCreateAction($request, $createService);
     }

@@ -36,11 +36,11 @@ abstract class Game extends AbstractEntity
     protected DateTime $endDate;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="text", nullable=true)
      */
-    protected string $description;
+    protected ?string $description = null;
 
     /**
      * @var User

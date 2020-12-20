@@ -24,8 +24,10 @@
       this.clearGame()
     },
     methods: {
-      submit () {
-        this.$store.dispatch('game/create', this.game)
+      async submit () {
+        let game = await this.$store.dispatch('game/create', this.game)
+
+        await this.$router.push(`/game/${game.id}`)
       },
       clearGame () {
         this.date = null
@@ -37,7 +39,9 @@
           time: null,
           venue: null,
           venue_details: {
-            ground: 'grass'
+            ground: 'grass',
+            ground_addition: null,
+            description: null
           },
           location: {},
           players_per_side: null,

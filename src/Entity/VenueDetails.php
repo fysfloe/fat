@@ -40,7 +40,7 @@ class VenueDetails extends AbstractEntity
      *
      * @ORM\Column(type="text", nullable=true)
      */
-    protected ?string $description;
+    protected ?string $description = null;
 
     /**
      * @return string

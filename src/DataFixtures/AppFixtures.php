@@ -26,7 +26,6 @@ class AppFixtures extends Fixture
                     ->setZipCode('1140')
                     ->setCity('Vienna')
                     ->setCountry('AT')
-                    ->setPlaceId('abc')
             ));
 
         $manager->persist((new Venue())
@@ -37,7 +36,6 @@ class AppFixtures extends Fixture
                     ->setZipCode('1140')
                     ->setCity('Vienna')
                     ->setCountry('AT')
-                    ->setPlaceId('def')
             ));
 
         $manager->persist((new Venue())
@@ -48,7 +46,6 @@ class AppFixtures extends Fixture
                     ->setZipCode('1130')
                     ->setCity('Vienna')
                     ->setCountry('AT')
-                    ->setPlaceId('ghi')
             ));
     }
 }
