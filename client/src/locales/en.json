@@ -14,8 +14,10 @@
       "details": {
         "heading": "Game details",
         "name": "Name",
-        "date": "Date",
-        "time": "Time",
+        "startDate": "Start date",
+        "startTime": "Start time",
+        "endDate": "End date",
+        "endTime": "End time",
         "private": "Private"
       },
       "venue": {

@@ -2,19 +2,22 @@
   <div class="create-game">
     <page-title>{{ $t('game.create.heading') }}</page-title>
 
-    <form @submit.prevent="submit">
-      <game-form-steps :game="game"></game-form-steps>
-    </form>
+    <ValidationObserver v-slot="{ handleSubmit }">
+      <form @submit.prevent="handleSubmit(submit)">
+        <game-form-steps :game="game"></game-form-steps>
+      </form>
+    </ValidationObserver>
   </div>
 </template>
 
 <script>
   import PageTitle from '../basic/PageTitle';
   import GameFormSteps from './form/GameFormSteps';
+  import { ValidationObserver } from 'vee-validate';
 
   export default {
     name: 'create-game',
-    components: {GameFormSteps, PageTitle},
+    components: {GameFormSteps, PageTitle, ValidationObserver},
     data () {
       return {
         game: null
