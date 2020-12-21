@@ -30,6 +30,30 @@
         </span>
         </div>
       </template>
+      <template v-else-if="type === 'datetime'">
+        <label class="label" :for="name">{{ label }} <span v-if="required">*</span></label>
+        <div :class="{'control': true, 'has-icons-left': icon !== null}">
+          <input
+              @focus="$emit('focus')"
+              @focusout="$emit('focusout')"
+              class="input"
+              type="text"
+              :name="name"
+              :id="name"
+              :min="min"
+              :max="max"
+              v-model="val"
+              :placeholder="label"
+              :autofocus="autofocus"
+              ref="input"
+              :disabled="disabled"
+              :autocomplete="autocomplete"
+          >
+          <span v-if="icon" class="icon is-small is-left">
+          <i :class="icon"></i>
+          </span>
+        </div>
+      </template>
       <template v-else-if="type === 'currency'">
         <label class="label" :for="name">{{ label }} <span v-if="required">*</span></label>
         <div :class="{'control': true, 'has-icons-left': icon !== null}">
@@ -72,6 +96,7 @@
 import moment from 'moment'
 import { ValidationProvider, extend } from 'vee-validate';
 import { required } from 'vee-validate/dist/rules';
+import flatpickr from 'flatpickr';
 
 extend('required', {
   ...required,
@@ -146,6 +171,14 @@ export default {
   methods: {
     focusInput () {
       this.$refs.input.focus()
+    }
+  },
+  mounted () {
+    if (this.type === 'datetime') {
+      flatpickr(this.$refs.input, {
+        enableTime: true,
+        dateFormat: 'Y-m-d H:i',
+      });
     }
   }
 }

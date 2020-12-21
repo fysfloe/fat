@@ -21,4 +21,5 @@ Vue.use(require('vue-moment'));
 Vue.use(VueScrollTo)
 Vue.use(VueObserveVisibility)
 
+require('flatpickr/dist/flatpickr.css')
 require('@/assets/scss/main.scss')

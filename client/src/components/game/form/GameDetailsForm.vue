@@ -14,15 +14,7 @@
             name="startDate"
             v-model="startDate"
             required
-            type="date"
-        />
-
-        <input-group
-            :label="$t('game.form.details.startTime')"
-            name="startTime"
-            v-model="startTime"
-            required
-            type="time"
+            type="datetime"
         />
       </div>
       <div class="column">
@@ -31,15 +23,7 @@
             name="endDate"
             v-model="endDate"
             required
-            type="date"
-        />
-
-        <input-group
-            :label="$t('game.form.details.endTime')"
-            name="endTime"
-            v-model="endTime"
-            required
-            type="time"
+            type="datetime"
         />
       </div>
     </div>
@@ -69,32 +53,24 @@
     data () {
       return {
         startDate: null,
-        startTime: null,
-        endDate: null,
-        endTime: null,
-        startDateTimeString: null,
-        endDateTimeString: null
+        endDate: null
       }
     },
     watch: {
       startDate () {
-        this.startDateTimeString = moment((this.startDate ? this.startDate + ' ' : '') + (this.startTime ?? '')).format()
-      },
-      startTime () {
-        this.startDateTimeString = moment((this.startDate ? this.startDate + ' ' : '') + (this.startTime ?? '')).format()
-      },
-      startDateTimeString () {
-        this.game.start_date = this.startDateTimeString
+        if (!this.endDate || this.endDate < this.startDate) {
+          this.endDate = moment(this.startDate).add(2, 'hours').format('YYYY-MM-DD HH:mm')
+        }
+
+        this.game.start_date = moment(this.startDate).format()
       },
       endDate () {
-        this.endDateTimeString = moment((this.endDate ? this.endDate + ' ' : '') + (this.endTime ?? '')).format()
+        if (!this.startDate || this.endDate < this.startDate) {
+          this.startDate = moment(this.endDate).subtract(2, 'hours').format('YYYY-MM-DD HH:mm')
+        }
+
+        this.game.end_date = moment(this.endDate).format()
       },
-      endTime () {
-        this.endDateTimeString = moment((this.endDate ? this.endDate + ' ' : '') + (this.endTime ?? '')).format()
-      },
-      endDateTimeString () {
-        this.game.end_date = this.endDateTimeString
-      }
     },
   }
 </script>
