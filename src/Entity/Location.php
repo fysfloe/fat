@@ -14,6 +14,14 @@ class Location extends AbstractEntity
     use SoftDelete;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\NotBlank()
+     */
+    private ?string $name = null;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="string")
@@ -55,12 +63,30 @@ class Location extends AbstractEntity
 
     public function getWriteableFields(): array
     {
-        return ['street', 'zipCode', 'city', 'country'];
+        return ['name', 'street', 'zipCode', 'city', 'country'];
     }
 
     public function getReadableFields(): array
     {
-        return ['id', 'street', 'zipCode', 'city', 'country'];
+        return ['id', 'name', 'street', 'zipCode', 'city', 'country'];
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string|null $name
+     * @return Location
+     */
+    public function setName(?string $name): Location
+    {
+        $this->name = $name;
+        return $this;
     }
 
     /**

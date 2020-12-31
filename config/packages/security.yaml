@@ -10,14 +10,28 @@ security:
             entity:
                 class: App\Entity\User
                 property: email
+
     firewalls:
+        login:
+            pattern: ^/auth/login
+            stateless: true
+            anonymous: true
+            json_login:
+                check_path: /auth/login_check
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: true
+            anonymous: false
             lazy: true
             provider: app_user_provider
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+            logout:
+                path: /auth/logout
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -30,3 +44,4 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/auth/current_user, roles: ROLE_USER }

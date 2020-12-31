@@ -14,31 +14,35 @@ export default new Vuex.Store({
       type: null,
       show: false,
       text: ''
-    },
-    countries: {
-      // TODO
-      'at': 'Austria'
     }
   },
   actions: {
-    login ({ commit }, credentials) {
-      return axios.post('login', credentials)
+    login ({ dispatch }, credentials) {
+      return axios.post('auth/login_check', credentials)
         .then(response => {
-          commit('setUser', response.data.user)
           localStorage.setItem('token', response.data.token)
+          dispatch('getCurrentUser')
         })
     },
+    getCurrentUser ({ commit }) {
+      return axios.get('auth/current_user')
+          .then(response => {
+            commit('setUser', response.data.data)
+          })
+    },
     register ({ commit }, user) {
-      return axios.post('register', user)
+      return axios.post('auth/register', user)
         .then(response => {
-          commit('setUser', response.data.user)
-          localStorage.setItem('token', response.data.token)
+          commit('setUser', response.data.data)
+          localStorage.setItem('token', response.data.data.auth_token)
         })
     },
     logout ({ commit }) {
-      commit('setUser', null)
-      localStorage.removeItem('token')
-      localStorage.removeItem('user')
+      return axios.post('auth/logout')
+          .then(() => {
+            commit('setUser', null)
+            localStorage.removeItem('token')
+          })
     },
     updateProfile ({ commit }, user) {
       return axios.post('users/update-profile', user)
@@ -80,14 +84,6 @@ export default new Vuex.Store({
   getters: {
     isLoggedIn: state => {
       return state.user !== null
-    },
-    categoryOptions: state => {
-      return state.categories.items.map(category => {
-        return {
-          value: category._id,
-          name: category.name
-        }
-      })
     }
   },
   modules: {

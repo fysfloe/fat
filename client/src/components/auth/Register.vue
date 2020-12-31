@@ -8,10 +8,18 @@
       </div>
 
       <input-group
-              :label="$t('register.form.name')"
-              name="name"
+              :label="$t('register.form.firstname')"
+              name="firstname"
               type="text"
-              v-model="name"
+              v-model="firstname"
+              required
+      />
+
+      <input-group
+              :label="$t('register.form.lastname')"
+              name="lastname"
+              type="text"
+              v-model="lastname"
               required
       />
 
@@ -52,7 +60,8 @@ export default {
   components: { InputGroup },
   data () {
     return {
-      name: null,
+      firstname: null,
+      lastname: null,
       email: null,
       password: null,
       repeatPassword: null,
@@ -69,7 +78,8 @@ export default {
 
       try {
         await this.$store.dispatch('register', {
-          name: this.name,
+          firstname: this.firstname,
+          lastname: this.lastname,
           email: this.email,
           password: this.password
         })

@@ -12,6 +12,14 @@
 
       <div>
         <input-group
+            :label="$t('game.form.venue.name')"
+            name="venue.name"
+            v-model="game.location.name"
+            required
+            :disabled="!!game.venue"
+        />
+
+        <input-group
                 :label="$t('game.form.venue.street')"
                 name="venue.street"
                 v-model="game.location.street"

@@ -26,11 +26,14 @@
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
-            <a class="button is-primary">
-              <strong>Sign up</strong>
-            </a>
-            <a class="button is-light">
-              Log in
+            <router-link to="/register" class="button is-primary">
+              <strong>{{ $t('navigation.signUp') }}</strong>
+            </router-link>
+            <router-link v-if="!isLoggedIn" to="/login" class="button is-light">
+              {{ $t('navigation.login') }}
+            </router-link>
+            <a v-else href="#" class="button is-light" @click.prevent="logout">
+              {{ $t('navigation.logout') }}
             </a>
           </div>
         </div>
@@ -40,29 +43,31 @@
 </template>
 
 <script>
-  import ClickOutside from 'vue-click-outside'
+import ClickOutside from 'vue-click-outside'
+import { mapGetters } from 'vuex'
 
-
-  export default {
+export default {
   name: 'navigation',
+  computed: {
+    ...mapGetters(['isLoggedIn'])
+  },
   data () {
     return {
       isActive: false
     }
   },
   methods: {
-    logout (event) {
-      event.preventDefault()
+    logout () {
       this.$store.dispatch('logout')
       this.$router.push('/login')
     }
   },
-    directives: {
-      ClickOutside
-    }
+  directives: {
+    ClickOutside
+  }
 }
 </script>
 
 <style scoped lang="scss">
-  @import '../../assets/scss/variables';
+@import '../../assets/scss/variables';
 </style>

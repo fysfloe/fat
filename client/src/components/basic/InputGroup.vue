@@ -10,7 +10,7 @@
         </div>
       </template>
       <template v-else-if="type === 'textarea'">
-        <label class="label" :for="name">{{ label }} <span v-if="required">*</span></label>
+        <label class="label" :for="name">{{ label }} <span v-if="required" class="has-text-primary">*</span></label>
         <div :class="{'control': true, 'has-icons-left': icon !== null}">
         <textarea
             @focus="$emit('focus')"
@@ -31,7 +31,7 @@
         </div>
       </template>
       <template v-else-if="type === 'datetime'">
-        <label class="label" :for="name">{{ label }} <span v-if="required">*</span></label>
+        <label class="label" :for="name">{{ label }} <span v-if="required" class="has-text-primary">*</span></label>
         <div :class="{'control': true, 'has-icons-left': icon !== null}">
           <input
               @focus="$emit('focus')"
@@ -55,7 +55,7 @@
         </div>
       </template>
       <template v-else-if="type === 'currency'">
-        <label class="label" :for="name">{{ label }} <span v-if="required">*</span></label>
+        <label class="label" :for="name">{{ label }} <span v-if="required" class="has-text-primary">*</span></label>
         <div :class="{'control': true, 'has-icons-left': icon !== null}">
           <currency-input class="input" :name="name" :id="name" :min="min" :max="max" v-model="val" :placeholder="label" :currency="null" :autofocus="autofocus" ref="input" :disabled="disabled" />
           <span v-if="icon" class="icon is-small is-left">
@@ -64,7 +64,7 @@
         </div>
       </template>
       <template v-else>
-        <label class="label" :for="name">{{ label }} <span v-if="required">*</span></label>
+        <label class="label" :for="name">{{ label }} <span v-if="required" class="has-text-primary">*</span></label>
         <div :class="{'control': true, 'has-icons-left': icon !== null}">
           <input
               @focus="$emit('focus')"

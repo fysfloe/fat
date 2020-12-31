@@ -2,7 +2,29 @@
   "common": {
     "submit": "Submit"
   },
+  "navigation": {
+    "signUp": "Sign up",
+    "login": "Login",
+    "logout": "Logout",
+    "home": "Home",
+    "findGame": "Find game"
+  },
+  "register": {
+    "title": "Register",
+    "form": {
+      "firstname": "Firstname",
+      "lastname": "Lastname",
+      "email": "E-mail",
+      "password": "Password",
+      "repeatPassword": "Repeat password",
+      "submitButton": "Register"
+    }
+  },
   "game": {
+    "list": {
+      "heading": "Find game"
+    },
+    "createButton": "Create game",
     "create": {
       "heading": "Create new game"
     },
@@ -23,7 +45,8 @@
       "venue": {
         "heading": "Choose venue",
         "chooseExistingVenue": "Choose existing venue",
-        "name": "Venue",
+        "venue": "Venue",
+        "name": "Name",
         "orEnterLocation": "Or enter location",
         "street": "Street",
         "zipCode": "ZIP code",

@@ -1,7 +1,7 @@
 <template>
   <div class="select-field">
     <div class="field" v-if="!expanded">
-      <label class="label" :for="name">{{ label }} <span v-if="required">*</span></label>
+      <label class="label" :for="name">{{ label }} <span v-if="required" class="has-text-primary">*</span></label>
       <div :class="{'control': true, 'has-icons-left': clearable}">
         <div :class="{'select': true, 'is-multiple': multiple}">
           <select @change="$emit('change')" :name="name" :id="name" v-model="val" :multiple="multiple" :disabled="disabled">
@@ -15,7 +15,7 @@
     </div>
 
     <div class="expanded-field" v-else>
-      <label class="label" :for="name">{{ label }} <span v-if="required">*</span></label>
+      <label class="label" :for="name">{{ label }} <span v-if="required" class="has-text-primary">*</span></label>
 
       <div class="is-flex is-flex-wrap-wrap">
         <div :class="{'expanded-option': true, 'selected': option.value === val}" v-for="option in options" :key="option.value" @click="val = option.value">

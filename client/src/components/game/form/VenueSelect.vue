@@ -1,7 +1,7 @@
 <template>
   <div class="venue-select">
     <input-group
-            :label="$t('game.form.venue.name')"
+            :label="$t('game.form.venue.venue')"
             name="venue.name"
             v-model="venueName"
             @focus="opened = true"

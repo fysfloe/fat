@@ -1,15 +1,13 @@
 <template>
   <div class="find-game">
     <h2 class="title is-flex is-justify-content-space-between">
-      <span>{{ $t('findGame.heading') }}</span>
+      <span>{{ $t('game.list.heading') }}</span>
       <router-link to="/game/create" class="button is-primary">{{ $t('game.createButton') }}</router-link>
     </h2>
 
-    <ul class="game-list" v-if="games.length > 0">
+    <ul class="game-list is-flex is-flex-wrap-wrap" v-if="games.length > 0">
       <li v-for="game in games" :key="game.id">
-        <router-link :to="`/game/${game.id}`">
-          {{ game.name }}
-        </router-link>
+        <game-list-item :game="game" />
       </li>
     </ul>
 
@@ -21,9 +19,11 @@
 
 <script>
   import {mapState} from "vuex";
+  import GameListItem from '@/components/game/GameListItem';
 
   export default {
     name: 'find-game',
+    components: {GameListItem},
     computed: {
       ...mapState({
         games: state => state.game.items
@@ -35,6 +35,10 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import '../../assets/scss/variables';
 
+.game-list {
+
+}
 </style>

@@ -43,7 +43,7 @@ export default {
   methods: {
     async login () {
       try {
-        await this.$store.dispatch('login', { email: this.email, password: this.password })
+        await this.$store.dispatch('login', { username: this.email, password: this.password })
         this.$router.push('/')
       } catch (error) {
         this.error = error.response.data.message
