@@ -42,6 +42,7 @@ export default new Vuex.Store({
           .then(() => {
             commit('setUser', null)
             localStorage.removeItem('token')
+            localStorage.removeItem('user')
           })
     },
     updateProfile ({ commit }, user) {

@@ -33,7 +33,7 @@ const routes = [
     path: '/game/create',
     name: 'CreateGame',
     component: () => import(/* webpackChunkName: "accountBook" */ '../components/game/CreateGame.vue'),
-    meta: { guarded: false }
+    meta: { guarded: true }
   },
   {
     path: '/game/:id',

@@ -5,7 +5,7 @@
         FAT
       </router-link>
 
-      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" @click="isActive = !isActive">
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" @click="isActive = !isActive" v-click-outside="close">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -24,18 +24,36 @@
       </div>
 
       <div class="navbar-end">
-        <div class="navbar-item">
+        <div class="navbar-item" v-if="!isLoggedIn">
           <div class="buttons">
             <router-link to="/register" class="button is-primary">
               <strong>{{ $t('navigation.signUp') }}</strong>
             </router-link>
-            <router-link v-if="!isLoggedIn" to="/login" class="button is-light">
+            <router-link to="/login" class="button is-light">
               {{ $t('navigation.login') }}
             </router-link>
-            <a v-else href="#" class="button is-light" @click.prevent="logout">
-              {{ $t('navigation.logout') }}
-            </a>
+
           </div>
+        </div>
+        <div :class="{'navbar-item has-dropdown': true, 'is-active': dropdownOpen}" @click.prevent="toggleDropdown" v-else v-click-outside="closeDropdown">
+          <a class="navbar-link">
+            <div class="user-info">
+              <div class="user-avatar">
+                <img v-if="user.avatar" :src="user.avatar" :alt="`${user.firstname} ${user.lastname}`">
+                <div v-else class="user-avatar-default"></div>
+              </div>
+              <span class="user-name">{{ user.firstname }} {{ user.lastname }}</span>
+            </div>
+
+            <div class="navbar-dropdown">
+              <router-link to="/profile" class="navbar-item">
+                {{ $t('navigation.profile') }}
+              </router-link>
+              <a class="navbar-item" @click.prevent="logout">
+                {{ $t('navigation.logout') }}
+              </a>
+            </div>
+          </a>
         </div>
       </div>
     </div>
@@ -44,22 +62,35 @@
 
 <script>
 import ClickOutside from 'vue-click-outside'
-import { mapGetters } from 'vuex'
+import {mapGetters, mapState} from 'vuex'
 
 export default {
   name: 'navigation',
   computed: {
-    ...mapGetters(['isLoggedIn'])
+    ...mapGetters(['isLoggedIn']),
+    ...mapState({
+      user: state => state.user
+    })
   },
   data () {
     return {
-      isActive: false
+      isActive: false,
+      dropdownOpen: false
     }
   },
   methods: {
     logout () {
       this.$store.dispatch('logout')
       this.$router.push('/login')
+    },
+    close () {
+      this.isActive = false
+    },
+    toggleDropdown () {
+      this.dropdownOpen = !this.dropdownOpen
+    },
+    closeDropdown () {
+      this.dropdownOpen = false
     }
   },
   directives: {
@@ -70,4 +101,23 @@ export default {
 
 <style scoped lang="scss">
 @import '../../assets/scss/variables';
+
+.user-info {
+  display: flex;
+  align-items: center;
+
+  .user-avatar {
+    width: 2em;
+    height: 2em;
+    border-radius: 0.5em;
+    overflow: hidden;
+    margin-right: 0.5em;
+
+    .user-avatar-default {
+      width: 100%;
+      height: 100%;
+      background: $primary;
+    }
+  }
+}
 </style>

@@ -8,6 +8,7 @@ import VueScrollTo from 'vue-scrollto'
 import VueObserveVisibility from 'vue-observe-visibility'
 
 Vue.config.productionTip = false
+store.commit('setUser', JSON.parse(localStorage.getItem('user')))
 
 new Vue({
   router,
