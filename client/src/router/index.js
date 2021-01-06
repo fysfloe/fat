@@ -26,19 +26,25 @@ const routes = [
   {
     path: '/find-game',
     name: 'FindGame',
-    component: () => import(/* webpackChunkName: "register" */ '../components/game/FindGame.vue'),
+    component: () => import(/* webpackChunkName: "findGame" */ '../components/game/FindGame.vue'),
     meta: { guarded: false }
   },
   {
     path: '/game/create',
     name: 'CreateGame',
-    component: () => import(/* webpackChunkName: "accountBook" */ '../components/game/CreateGame.vue'),
+    component: () => import(/* webpackChunkName: "createGame" */ '../components/game/CreateGame.vue'),
     meta: { guarded: true }
   },
   {
     path: '/game/:id',
     name: 'Game',
-    component: () => import(/* webpackChunkName: "register" */ '../components/game/Game.vue'),
+    component: () => import(/* webpackChunkName: "game" */ '../components/game/Game.vue'),
+    meta: { guarded: false }
+  },
+  {
+    path: '/profile/:id?',
+    name: 'Profile',
+    component: () => import(/* webpackChunkName: "profile" */ '../components/profile/Profile.vue'),
     meta: { guarded: false }
   },
 ]

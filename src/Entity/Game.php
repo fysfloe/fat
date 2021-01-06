@@ -250,6 +250,6 @@ abstract class Game extends AbstractEntity
 
     public function getReadableFields(): array
     {
-        return ['id', 'name', 'startDate', 'endDate', 'venue', 'location', 'private', 'venueDetails'];
+        return ['handle', 'name', 'startDate', 'endDate', 'venue', 'location', 'private', 'venueDetails'];
     }
 }

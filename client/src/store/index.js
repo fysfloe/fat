@@ -3,12 +3,13 @@ import Vuex from 'vuex'
 import axios from '../config/axios'
 import game from '../modules/game/store'
 import venue from '../modules/venue/store'
+import user from '../modules/user/store'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user: null,
+    currentUser: null,
     isLoggedIn: false,
     alertBar: {
       type: null,
@@ -63,7 +64,7 @@ export default new Vuex.Store({
   },
   mutations: {
     setUser (state, user) {
-      state.user = user
+      state.currentUser = user
       localStorage.setItem('user', JSON.stringify(user))
     },
     showAlertBar (state, config) {
@@ -84,11 +85,12 @@ export default new Vuex.Store({
   },
   getters: {
     isLoggedIn: state => {
-      return state.user !== null
+      return state.currentUser !== null
     }
   },
   modules: {
     game,
-    venue
+    venue,
+    user
   }
 })

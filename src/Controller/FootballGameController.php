@@ -50,20 +50,20 @@ class FootballGameController extends RestController
     }
 
     /**
-     * @Route("/{id}", methods={"GET"})
+     * @Route("/{handle}", methods={"GET"})
      *
-     * @param int $id
+     * @param string $handle
      * @return JsonResponse
      */
-    public function getAction(int $id): JsonResponse
+    public function getAction(string $handle): JsonResponse
     {
-        return $this->response($this->getEntity(['id' => $id]));
+        return $this->response($this->getEntity(['handle' => $handle]));
     }
 
     /**
-     * @Route("/{id}", methods={"PATCH"})
+     * @Route("/{handle}", methods={"PATCH"})
      *
-     * @param int $id
+     * @param string $handle
      * @param Request $request
      * @param UpdateService $updateService
      * @return JsonResponse
@@ -72,15 +72,15 @@ class FootballGameController extends RestController
      * @throws OptimisticLockException
      * @throws WrongRepositoryException
      */
-    public function updateAction(int $id, Request $request, UpdateService $updateService): JsonResponse
+    public function updateAction(string $handle, Request $request, UpdateService $updateService): JsonResponse
     {
-        return $this->defaultUpdateAction($id, $request, $updateService);
+        return $this->defaultUpdateAction($handle, $request, $updateService);
     }
 
     /**
-     * @Route("/{id}", methods={"DELETE"})
+     * @Route("/{handle}", methods={"DELETE"})
      *
-     * @param int $id
+     * @param string $handle
      * @param DeleteService $deleteService
      * @return JsonResponse
      * @throws MissingRepositoryException
@@ -88,9 +88,9 @@ class FootballGameController extends RestController
      * @throws OptimisticLockException
      * @throws WrongRepositoryException
      */
-    public function deleteAction(int $id, DeleteService $deleteService): JsonResponse
+    public function deleteAction(string $handle, DeleteService $deleteService): JsonResponse
     {
-        return $this->defaultDeleteAction($id, $deleteService);
+        return $this->defaultDeleteAction($handle, $deleteService);
     }
 
     protected function getEntityClass(): string

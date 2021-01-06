@@ -8,6 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class User extends AbstractEntity implements UserInterface
 {
@@ -164,6 +165,6 @@ class User extends AbstractEntity implements UserInterface
 
     public function getReadableFields(): array
     {
-        return ['firstname', 'lastname', 'email'];
+        return ['firstname', 'lastname', 'email', 'createdAt'];
     }
 }

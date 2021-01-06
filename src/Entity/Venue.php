@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VenueRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Venue extends AbstractEntity
 {
@@ -34,7 +35,7 @@ class Venue extends AbstractEntity
 
     public function getReadableFields(): array
     {
-        return ['id', 'name', 'location'];
+        return ['handle', 'name', 'location'];
     }
 
     /**

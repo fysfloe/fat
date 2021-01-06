@@ -21,11 +21,11 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(function (response) {
   return response
 }, function (error) {
-  if (error.response.status === 401) {
+  if (error.response.status === 401 && error.response.config.url !== 'auth/logout') {
     store.dispatch('logout')
-  } else {
-    return Promise.reject(error)
   }
+
+  return Promise.reject(error)
 })
 
 export default instance

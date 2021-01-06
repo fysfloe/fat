@@ -65,9 +65,7 @@ class LoginService
             }
         }
 
-        $authToken = $this->jwtManager->create($user);
-
-        $user->setAuthToken($authToken);
+        $this->jwtManager->create($user);
 
         return $user;
     }

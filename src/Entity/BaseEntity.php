@@ -5,6 +5,7 @@ namespace App\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Uid\Uuid;
 
 trait BaseEntity
 {
@@ -16,6 +17,13 @@ trait BaseEntity
      * @ORM\Column(type="integer")
      */
     private int $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="uuid", unique=true)
+     */
+    private string $handle = '';
 
     /**
      * @var DateTime
@@ -40,6 +48,16 @@ trait BaseEntity
      * @ORM\JoinColumn(name="created_by", referencedColumnName="id", nullable=true)
      */
     private User $createdBy;
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function createHandle(): void
+    {
+        if (empty($this->handle)) {
+            $this->handle = Uuid::v4();
+        }
+    }
 
     /**
      * @return int
@@ -111,5 +129,13 @@ trait BaseEntity
     {
         $this->createdBy = $createdBy;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHandle(): string
+    {
+        return $this->handle;
     }
 }

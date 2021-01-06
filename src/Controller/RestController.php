@@ -67,7 +67,7 @@ abstract class RestController extends AbstractController
     }
 
     /**
-     * @param int $id
+     * @param string $handle
      * @param Request $request
      * @param UpdateService $updateService
      * @return JsonResponse
@@ -76,13 +76,13 @@ abstract class RestController extends AbstractController
      * @throws OptimisticLockException
      * @throws WrongRepositoryException
      */
-    protected function defaultUpdateAction(int $id, Request $request, UpdateService $updateService): JsonResponse
+    protected function defaultUpdateAction(string $handle, Request $request, UpdateService $updateService): JsonResponse
     {
         $updateService->setRepository($this->getRepository());
 
         try {
             return $this->response(
-                $updateService->handle(['id' => $id], $this->decodeRequestData($request))
+                $updateService->handle(['handle' => $handle], $this->decodeRequestData($request))
             );
         } catch (ValidationException $e) {
             return $this->errorResponse((string)$e->getErrors());
@@ -98,12 +98,12 @@ abstract class RestController extends AbstractController
      * @throws OptimisticLockException
      * @throws WrongRepositoryException
      */
-    protected function defaultDeleteAction(int $id, DeleteService $deleteService): JsonResponse
+    protected function defaultDeleteAction(string $handle, DeleteService $deleteService): JsonResponse
     {
         $deleteService->setRepository($this->getRepository());
 
         return $this->response(
-            $deleteService->handle(['id' => $id])
+            $deleteService->handle(['handle' => $handle])
         );
     }
 

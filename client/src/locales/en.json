@@ -10,6 +10,17 @@
     "findGame": "Find game",
     "profile": "Profile"
   },
+  "home": {
+    "welcomeTitle": "Welcome to FAT!",
+    "welcomeIntro": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+  },
+  "profile": {
+    "stats": {
+      "gamesAttended": "Games attended",
+      "gamesHosted": "Games hosted",
+      "memberSince": "Member since"
+    }
+  },
   "register": {
     "title": "Register",
     "form": {

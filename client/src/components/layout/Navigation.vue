@@ -1,23 +1,19 @@
 <template>
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <router-link class="navbar-item" to="/">
+      <router-link class="navbar-item has-text-primary has-text-weight-bold" to="/">
         FAT
       </router-link>
 
-      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" @click="isActive = !isActive" v-click-outside="close">
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar" @click="isActive = !isActive" v-click-outside="close">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
       </a>
     </div>
 
-    <div id="navbarBasicExample" :class="{'navbar-menu': true, 'is-active': isActive}">
+    <div id="navbar" :class="{'navbar-menu': true, 'is-active': isActive}">
       <div class="navbar-start">
-        <router-link class="navbar-item" to="/">
-          {{ $t('navigation.home') }}
-        </router-link>
-
         <router-link class="navbar-item" to="/find-game">
           {{ $t('navigation.findGame') }}
         </router-link>
@@ -69,7 +65,7 @@ export default {
   computed: {
     ...mapGetters(['isLoggedIn']),
     ...mapState({
-      user: state => state.user
+      user: state => state.currentUser
     })
   },
   data () {

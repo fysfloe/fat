@@ -7,6 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class Location extends AbstractEntity
 {
@@ -68,7 +69,7 @@ class Location extends AbstractEntity
 
     public function getReadableFields(): array
     {
-        return ['id', 'name', 'street', 'zipCode', 'city', 'country'];
+        return ['handle', 'name', 'street', 'zipCode', 'city', 'country'];
     }
 
     /**
