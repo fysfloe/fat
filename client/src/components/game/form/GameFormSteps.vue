@@ -33,9 +33,21 @@
             @previousStep="previous"
             @setCurrentStep="setCurrentStep(3)"
             :is-current-step="currentStep === 3"
-            is-last
     >
       <game-venue-details-form :game="game" />
+    </game-form-step>
+
+    <game-form-step
+        :number="4"
+        ref="step-4"
+        :heading="$t('game.form.players.heading')"
+        @nextStep="next"
+        @previousStep="previous"
+        @setCurrentStep="setCurrentStep(4)"
+        :is-current-step="currentStep === 4"
+        is-last
+    >
+      <game-players-form :game="game" />
     </game-form-step>
   </div>
 </template>
@@ -45,10 +57,11 @@
   import GameDetailsForm from './GameDetailsForm';
   import GameVenueForm from './GameVenueForm';
   import GameVenueDetailsForm from './GameVenueDetailsForm';
+  import GamePlayersForm from '@/components/game/form/GamePlayersForm';
 
   export default {
     name: 'game-form-steps',
-    components: {GameVenueDetailsForm, GameVenueForm, GameDetailsForm, GameFormStep},
+    components: {GamePlayersForm, GameVenueDetailsForm, GameVenueForm, GameDetailsForm, GameFormStep},
     props: {
       game: {
         type: Object,

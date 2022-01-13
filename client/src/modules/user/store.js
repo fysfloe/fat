@@ -26,13 +26,12 @@ export default {
         dispatch('get', user.id)
       })
     },
-    async get ({ commit }, id) {
+    async get ({ commit }, handle) {
       commit('isLoading', true)
 
-      const response = await axios.get(`${name}/${id}`)
+      const response = await axios.get(`${name}/${handle}`)
 
       commit('setCurrent', response.data.data)
-
       commit('isLoading', false)
 
       return response

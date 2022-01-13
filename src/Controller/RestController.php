@@ -27,6 +27,27 @@ abstract class RestController extends AbstractController
     abstract protected function getEntityClass(): string;
 
     /**
+     * @param array $entities
+     * @param array $meta
+     * @return JsonResponse
+     */
+    protected function autocompleteResponse(array $entities, array $meta = []): JsonResponse
+    {
+        $data = array_map(function (AbstractEntity $entity) {
+            return [
+                'name' => (string)$entity,
+                'value' => $entity->getHandle()
+            ];
+        }, $entities);
+
+        return $this->json([
+            'data' => $data,
+            'meta' => $meta,
+            'errors' => []
+        ]);
+    }
+
+    /**
      * @return BaseRepository
      * @throws WrongRepositoryException
      */

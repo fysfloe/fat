@@ -13,6 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User extends AbstractEntity implements UserInterface
 {
     use BaseEntity;
+    use SoftDelete;
 
     /**
      * @var string
@@ -43,6 +44,14 @@ class User extends AbstractEntity implements UserInterface
      * @ORM\Column(type="string")
      */
     private string $password;
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->getFirstname() . ' ' . $this->getLastname();
+    }
 
     public function getId(): ?int
     {
@@ -165,6 +174,6 @@ class User extends AbstractEntity implements UserInterface
 
     public function getReadableFields(): array
     {
-        return ['firstname', 'lastname', 'email', 'createdAt'];
+        return ['handle', 'firstname', 'lastname', 'email', 'createdAt'];
     }
 }

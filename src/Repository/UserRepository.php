@@ -64,4 +64,18 @@ class UserRepository extends BaseRepository implements PasswordUpgraderInterface
         ;
     }
     */
+
+    /**
+     * @param string $input
+     * @return array
+     */
+    public function autocomplete(string $input): array
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.deletedAt IS NULL')
+            ->andWhere('u.email LIKE :input OR u.firstname LIKE :input OR u.lastname LIKE :input')
+            ->setParameter('input', "%$input%")
+            ->getQuery()
+            ->getResult();
+    }
 }

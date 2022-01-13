@@ -47,7 +47,10 @@
             description: null
           },
           location: {},
-          players_per_side: null,
+          num_players: null,
+          players_can_invite: false,
+          players: [],
+          invitees: [],
           private: false
         }
       }

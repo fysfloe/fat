@@ -32,6 +32,9 @@
       "submitButton": "Register"
     }
   },
+  "autocomplete": {
+    "tooFewCharacters": "Please type at least 3 characters."
+  },
   "game": {
     "list": {
       "heading": "Find game"
@@ -84,6 +87,16 @@
         "hasCafeteria": "Cafeteria",
         "hasSauna": "Sauna",
         "description": "Description"
+      },
+      "players": {
+        "heading": "Players",
+        "numPlayers": "Number of players",
+        "canInvite": "Players are allowed to invite others",
+        "invitePlayers": "Invite players",
+        "inviteeList": "Invitees",
+        "playersList": "Players",
+        "noInvitees": "No e-mail addresses invited yet.",
+        "noPlayers": "No players invited yet."
       }
     }
   }
